@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+langchain
+langchain-community
+langchain-openai
+faiss-cpu
+pypdf
+tiktoken
+python-multipart
+groq
+langchain-text-splitters
+langchain-huggingface
+langchain-groq

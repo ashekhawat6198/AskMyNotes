@@ -9,6 +9,8 @@ import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import Upload from "./pages/Upload";
+import Chat from "./pages/chat";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path='/' element={<PrivateRoute />}>
             <Route path="/" element={<Dashboard/>} />
+            <Route path="/upload" element={<Upload />} />
+            <Route path="/chat" element={<Chat/>} />
           </Route>
         </Routes>
       </main>

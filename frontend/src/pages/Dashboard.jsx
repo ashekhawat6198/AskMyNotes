@@ -1,18 +1,32 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { logout,reset } from "../features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const Dashboard = () => {
+
+  const dispatch = useDispatch();
+   const navigate = useNavigate();
+
+  const onLogout = () => {
+     dispatch(logout()); 
+     dispatch(reset());
+    navigate("/login"); 
+   }
+
+
   const {user} = useSelector((state) => state.auth);
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-gray-900 text-white p-6 sm:p-10">
+    <div onSubmit={onLogout} className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-gray-900 text-white p-6 sm:p-10">
       
       {/* Header */}
-      <div className="flex justify-between items-center mb-10">
+      <div onSubmit={onLogout} className="flex justify-between items-center mb-10">
         <h1 className="text-2xl sm:text-3xl font-black">
           Welcome <span className="text-purple-400">{user.name.split(" ")[0]}</span>
         </h1>
 
-        <button className="bg-white/10 border border-white/20 px-4 py-2 rounded-xl hover:bg-white/20 transition">
+        <button onClick={onLogout} className="bg-white/10 border border-white/20 px-4 py-2 rounded-xl hover:bg-white/20 transition">
           Logout
         </button>
       </div>
@@ -33,7 +47,7 @@ const Dashboard = () => {
         </Link>
 
         {/* Ask Question */}
-        <Link to="/ask">
+        <Link to="/chat">
           <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 shadow-xl hover:scale-[1.02] transition cursor-pointer">
             <h2 className="text-xl font-bold mb-2 text-purple-300">
               Ask Questions

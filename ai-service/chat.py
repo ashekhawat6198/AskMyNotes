@@ -9,6 +9,7 @@ from langchain_groq import ChatGroq
 
 load_dotenv()
 
+
 async def chat_with_notes(data):
     query = data["query"]
     file_id = data["fileId"]
@@ -20,24 +21,39 @@ async def chat_with_notes(data):
         embeddings,
         allow_dangerous_deserialization=True
     )
-
-    retriever = vectorstore.as_retriever()
+    retriever = vectorstore.as_retriever(
+    search_type="mmr",
+    search_kwargs={"k": 8}
+    )
 
     docs = retriever.invoke(query)
+    print(f"\n🔍 QUERY: {query}")
+    for i, doc in enumerate(docs):
+        print(f"\n--- CHUNK {i} ---")
+        print(doc.page_content[:200])
+    
+    context = "\n\n".join([doc.page_content for doc in docs])
+    print(f"\n📄 FULL CONTEXT:\n{context[:500]}")
 
-    context = "\n".join([doc.page_content for doc in docs])
+    
 
     #  Prompt
     prompt = f"""
-    Answer the question using only the context below.
-    If not found, say "Not in notes".
+    You are an intelligent document assistant.
+
+    Rules:
+    - Extract exact answers from context
+    - Understand short queries like "name", "guide", "registration"
+    - Match similar meanings (e.g., reg no = registration number)
+    - If found, return ONLY the value
+    - If not found, say "Not in notes"
 
     Context:
     {context}
 
     Question:
     {query}
-    """
+"""
 
     llm = ChatGroq(
        model="openai/gpt-oss-20b",

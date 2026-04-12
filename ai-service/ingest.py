@@ -4,6 +4,10 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_community.document_loaders import PyMuPDFLoader
+
+
+
 
 VECTOR_PATH = "vectorstore"
 
@@ -31,12 +35,16 @@ async def ingest_file(data):
             return {"error": "Unsupported file type"}
 
         docs = loader.load()
-        
-        print("📄 DOCS LOADED:", len(docs))
-       
-        if not docs:
-            return {"error": "No content found in file"}
 
+       
+        for i, doc in enumerate(docs):
+            print(f"\n--- PAGE {i} RAW TEXT ---")
+            print(repr(doc.page_content))
+
+        print("📄 DOCS LOADED:", len(docs))  # this prints fine
+    
+       
+       
       
         splitter = RecursiveCharacterTextSplitter(
             chunk_size=1000,
@@ -44,7 +52,6 @@ async def ingest_file(data):
         )
 
         chunks = splitter.split_documents(docs)
-
        
         if not chunks:
             return {"error": "Text splitting failed"}

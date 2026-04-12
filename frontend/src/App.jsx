@@ -22,7 +22,7 @@ function App() {
           <Route path='/' element={<PrivateRoute />}>
             <Route path="/" element={<Dashboard/>} />
             <Route path="/upload" element={<Upload />} />
-            <Route path="/chat" element={<Chat/>} />
+            <Route path="/chat/:fileId" element={<Chat/>} />
           </Route>
         </Routes>
       </main>

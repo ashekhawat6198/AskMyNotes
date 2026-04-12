@@ -54,16 +54,21 @@ app.use("/api/chat",chatRoutes)
 
 
 io.on("connection", (socket) => {
-    console.log(`A user Connected ${socket.id}`);
-    const userId=socket.handshake.query.userId;
-    if(userId){
+    console.log(`🟢 A user Connected ${socket.id}`);
 
-        socket.join(userId);
-        console.log(`User ${socket.id} joined room: ${userId}`);
+    const userId = socket.handshake.query.userId;
+
+    console.log("👉 userId from query:", userId);
+
+    if (userId) {
+        socket.join(userId.toString());   // ✅ FIX HERE
+        console.log(`✅ User ${socket.id} joined room: ${userId}`);
+    } else {
+        console.log("❌ No userId received");
     }
 
     socket.on("disconnect", () => {
-        console.log(`User Disconnected ${socket.id}`);
+        console.log(`🔴 User Disconnected ${socket.id}`);
     });
 });
 

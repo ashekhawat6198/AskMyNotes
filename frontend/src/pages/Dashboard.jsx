@@ -47,7 +47,7 @@ const Dashboard = () => {
         </Link>
 
         {/* Ask Question */}
-        <Link to="/chat">
+        <Link to="/upload">
           <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 shadow-xl hover:scale-[1.02] transition cursor-pointer">
             <h2 className="text-xl font-bold mb-2 text-purple-300">
               Ask Questions
@@ -71,24 +71,7 @@ const Dashboard = () => {
         </Link>
       </div>
 
-      {/* Stats Section (Optional but premium feel) */}
-      <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6">
-        
-        <div className="bg-white/10 border border-white/20 rounded-2xl p-6 text-center">
-          <h3 className="text-2xl font-bold text-purple-400">12</h3>
-          <p className="text-gray-300 text-sm mt-1">Uploaded Files</p>
-        </div>
-
-        <div className="bg-white/10 border border-white/20 rounded-2xl p-6 text-center">
-          <h3 className="text-2xl font-bold text-purple-400">48</h3>
-          <p className="text-gray-300 text-sm mt-1">Questions Asked</p>
-        </div>
-
-        <div className="bg-white/10 border border-white/20 rounded-2xl p-6 text-center">
-          <h3 className="text-2xl font-bold text-purple-400">7</h3>
-          <p className="text-gray-300 text-sm mt-1">Active Sessions</p>
-        </div>
-      </div>
+      
 
       {/* CTA Section */}
       <div className="mt-14 text-center">

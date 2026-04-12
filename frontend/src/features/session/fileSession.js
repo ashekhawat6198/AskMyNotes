@@ -38,7 +38,7 @@ export const uploadNotes = createAsyncThunk(
   async (file, thunkAPI) => {
     
     try {
-       console.log("hello from uploadNotes session")
+     
       const formData = new FormData();
       formData.append("file", file);
       const response = await api.post("/upload", formData);
@@ -58,33 +58,30 @@ export const uploadNotes = createAsyncThunk(
 
 
 export const sessionSlice = createSlice({
-    name: 'sessions',
-    initialState,
-    reducers: {
-        reset: (state) => {
-            state.isError = false;
-            state.message = '';
-            state.isLoading = false;
-         
-        },
-      extraReducers:(builder)=>{
-        builder
-        .addCase(uploadNotes.pending,(state)=>{
-            state.isLoading=true;
-        })
-        .addCase(uploadNotes.fulfilled,(state,action)=>{
-            state.isLoading=false;
-          
-        })
-        .addCase(uploadNotes.rejected,(state,action)=>{
-            state.isLoading=false;
-            state.isError=true;
-            state.message=action.payload;
-        })
-      }
-    }
-})
-
+  name: "fileSession",
+  initialState,
+  reducers: {
+    reset: (state) => {
+      state.isError = false;
+      state.message = "";
+      state.isLoading = false;
+    },
+  },                              // 👈 reducers closes here
+  extraReducers: (builder) => {   // 👈 extraReducers is outside reducers
+    builder
+      .addCase(uploadNotes.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(uploadNotes.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(uploadNotes.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      });
+  },
+});
 
 
 export const { reset} = sessionSlice.actions;

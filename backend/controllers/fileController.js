@@ -7,7 +7,7 @@ import asyncHandler from "express-async-handler";
 const AI_SERVICE_URL = "http://localhost:8000";
 
 const pushFileUpdate = (io, userId, fileId, status, message, file = null) => {
-  io.to(userId.toString()).emit("fileUpdate", {
+  io.to(userId.toString()).emit("file:update", {
     fileId,
     status,
     message,
@@ -99,7 +99,7 @@ export const uploadFile = asyncHandler(async (req, res) => {
     } catch (err) {
       file.processingError = err.message;
       await file.save();
-     console.log("INGEST ERROR:", err.response?.data || err.error);
+     console.log("INGEST ERROR:",  err.message);
 
       pushFileUpdate(io, userId, file._id, "FAILED", "Processing failed");
     }

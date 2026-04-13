@@ -11,6 +11,7 @@ import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import Upload from "./pages/Upload";
 import Chat from "./pages/chat";
+import History from "./pages/History";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/" element={<Dashboard/>} />
             <Route path="/upload" element={<Upload />} />
             <Route path="/chat/:fileId" element={<Chat/>} />
+            <Route path="/history" element={<History/>} />
           </Route>
         </Routes>
       </main>
